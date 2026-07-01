@@ -2,7 +2,12 @@ from fastapi import FastAPI
 from enum import Enum
 from pydantic import BaseModel
 
+from app.modules.users.router import router as user_router
+
+
 app = FastAPI()
+
+app.include_router(user_router)
 
 # -------------------------- #
 # Using Enum
