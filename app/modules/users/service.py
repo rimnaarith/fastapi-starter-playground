@@ -1,19 +1,31 @@
-from fastapi import HTTPException
-from .repository import UserRepository
+from fastapi import Depends, HTTPException
+
+from app.core.security import hash_password
+from app.modules.users.models import User
+from .repository import UserRepository, get_user_repository
 
 
 class UserService:
   def __init__(self, repo: UserRepository):
     self.repo = repo
 
-  async def create_user(self, name: str, email: str):
+  async def create_user(self, firstname: str, lastname: str, email: str, hashed_password: str) -> User:
     # prevent duplicate email
     existing = await self.repo.get_by_email(email)
 
     if existing:
-        raise HTTPException(
-            status_code=400,
-            detail="Email already exists"
-        )
-
-    return await self.repo.create(name, email)
+      raise HTTPException(
+        status_code=400,
+        detail="Email already exists"
+      )
+    return await self.repo.create(
+      firstname=firstname,
+      lastname=lastname,
+      email=email,
+      password=hashed_password
+    )
+  
+def get_user_service(
+  user_repo: UserRepository = Depends(get_user_repository),
+):
+  return UserService(user_repo)
