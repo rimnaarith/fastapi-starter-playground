@@ -84,6 +84,22 @@ For larger applications, organize by feature instead of layer.
 
 ```
 app/
+├── api/
+│   ├── v1/
+│   │   ├── router.py
+│   │   ├── endpoints/
+│   │   │   ├── auth.py
+│   │   │   ├── users.py
+│   │   │   ├── blog.py
+│   │   │   └── comments.py
+│   │
+│   ├── v2/
+│   │   ├── router.py
+│   │   ├── endpoints/
+│   │   │   ├── auth.py
+│   │   │   ├── users.py
+│   │   │   └── ...
+│
 ├── core/
 │   ├── config.py
 │   ├── database.py
@@ -91,7 +107,6 @@ app/
 │
 ├── modules/
 │   ├── auth/
-│   │   ├── router.py
 │   │   ├── service.py
 │   │   ├── repository.py
 │   │   ├── models.py
@@ -99,7 +114,6 @@ app/
 │   │   └── dependencies.py
 │   │
 │   ├── users/
-│   │   ├── router.py
 │   │   ├── service.py
 │   │   ├── repository.py
 │   │   ├── models.py
