@@ -7,6 +7,7 @@
 - asyncpg             PostgreSQL driver (asynchronous database access)
 - psycopg[binary]     PostgreSQL driver (synchronous database access. use for alembic migrations)
 - alembic             DB migrations
+- pwdlib[argon2]      Password hashing
 ```
 
 ## Quick Start (local)
