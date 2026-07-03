@@ -1,3 +1,5 @@
+from uuid import UUID
+
 from fastapi import Depends, HTTPException
 
 from app.core.security import hash_password
@@ -25,8 +27,13 @@ class UserService:
       password=hashed_password
     )
 
+
   async def get_by_email(self, email: str):
     return await self.repo.get_by_email(email)
+  
+
+  async def get_by_id(self, id: str):
+    return await self.repo.get_by_id(UUID(id))
   
 def get_user_service(
   user_repo: UserRepository = Depends(get_user_repository),

@@ -1,6 +1,7 @@
 from fastapi import Depends, HTTPException
 
 from app.core.security import (
+  decode_token,
   hash_password,
   verify_password,
   create_access_token,
@@ -43,6 +44,25 @@ class AuthService:
       refresh_token=create_refresh_token(str(user.id))
     )
 
+  async def refresh_token(self, refresh_token: str):
+    try:
+      payload = decode_token(refresh_token)
+    except Exception:
+      raise HTTPException(status_code=401, detail="Invalid refresh token")
+
+    if payload.get("type") != "refresh":
+      raise HTTPException(status_code=401, detail="Invalid token type")
+
+    user_id = payload.get("sub")
+    user = await self.user_service.get_by_id(user_id)
+
+    if not user:
+      raise HTTPException(status_code=401, detail="User not found")
+    
+    return TokenResponse(
+      access_token=create_access_token(str(user.id)),
+      refresh_token=create_refresh_token(str(user.id))
+    )
 
 def get_auth_service(
   user_service: UserService = Depends(get_user_service),
