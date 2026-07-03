@@ -24,6 +24,9 @@ class UserService:
       email=email,
       password=hashed_password
     )
+
+  async def get_by_email(self, email: str):
+    return await self.repo.get_by_email(email)
   
 def get_user_service(
   user_repo: UserRepository = Depends(get_user_repository),

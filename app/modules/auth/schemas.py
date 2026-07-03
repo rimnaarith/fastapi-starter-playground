@@ -1,4 +1,10 @@
+from enum import StrEnum
+
 from pydantic import BaseModel, EmailStr
+
+class Platform(StrEnum):
+  WEB = "web"
+  MOBILE = "mobile"
 
 class UserRegister(BaseModel):
   firstname: str
@@ -12,3 +18,14 @@ class RegisterResponse(BaseModel):
 
   class Config:
     from_attributes = True
+
+
+class LoginRequest(BaseModel):
+  email: EmailStr
+  password: str
+  platform: Platform
+
+class TokenResponse(BaseModel):
+  access_token: str
+  refresh_token: str | None = None
+  token_type: str = "Bearer"

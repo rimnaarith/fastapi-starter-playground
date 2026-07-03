@@ -1,8 +1,15 @@
-from fastapi import Depends
+from fastapi import Depends, HTTPException
 
-from app.core.security import hash_password
+from app.core.security import (
+  hash_password,
+  verify_password,
+  create_access_token,
+  create_refresh_token,
+)
 from app.modules.auth.schemas import UserRegister, RegisterResponse
 from app.modules.users.service import UserService, get_user_service
+
+from .schemas import TokenResponse
 
 
 class AuthService:
@@ -21,6 +28,21 @@ class AuthService:
       id=str(new_user.id),
       email=new_user.email
     )
+  
+  async def login(self, email: str, password: str):
+    user = await self.user_service.get_by_email(email)
+
+    if not user:
+      raise HTTPException(401)
+    
+    if not verify_password(password, user.password):
+      raise HTTPException(401)
+    
+    return TokenResponse(
+      access_token=create_access_token(str(user.id)),
+      refresh_token=create_refresh_token(str(user.id))
+    )
+
 
 def get_auth_service(
   user_service: UserService = Depends(get_user_service),
