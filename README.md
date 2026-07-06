@@ -2,12 +2,13 @@
 
 ## Dependencies
 ```text
-- fastapi[standard]   FastAPI
-- sqlalchemy          ORM
-- asyncpg             PostgreSQL driver (asynchronous database access)
-- psycopg[binary]     PostgreSQL driver (synchronous database access. use for alembic migrations)
-- alembic             DB migrations
-- pwdlib[argon2]      Password hashing
+- fastapi[standard]             FastAPI
+- sqlalchemy                    ORM
+- asyncpg                       PostgreSQL driver (asynchronous database access)
+- psycopg[binary]               PostgreSQL driver (synchronous database access. use for alembic migrations)
+- alembic                       DB migrations
+- pwdlib[argon2]                Password hashing
+- python-jose[cryptography]     JWT implementation
 ```
 
 ## Quick Start (local)
