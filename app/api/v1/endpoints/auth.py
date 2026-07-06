@@ -1,10 +1,11 @@
 from fastapi import APIRouter, Cookie, Depends, HTTPException, Response
 
 from app.modules.auth.service import AuthService
-from app.modules.auth.dependencies import get_auth_service
+from app.modules.auth.dependencies import get_auth_service, get_current_user
 from app.core.config import settings
 
 from app.modules.auth.schemas import (
+  CurrentUserResponse,
   LoginRequest,
   Platform,
   RefreshRequest, 
@@ -12,6 +13,7 @@ from app.modules.auth.schemas import (
   UserRegister, 
   RegisterResponse
 )
+from app.modules.users.models import User
 
 router = APIRouter()
 
@@ -81,4 +83,14 @@ async def refresh_token(
 
   return TokenResponse(
     access_token=tokens.access_token
+  )
+
+@router.get("/me", response_model=CurrentUserResponse)
+async def me(
+  current_user: User = Depends(get_current_user)
+):
+  return CurrentUserResponse(
+    firstname=current_user.firstname,
+    lastname=current_user.lastname,
+    email=current_user.email
   )

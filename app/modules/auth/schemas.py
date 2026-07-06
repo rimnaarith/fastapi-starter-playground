@@ -32,3 +32,9 @@ class TokenResponse(BaseModel):
 
 class RefreshRequest(BaseModel):
   refresh_token: str
+
+
+class CurrentUserResponse(BaseModel):
+  firstname: str
+  lastname: str
+  email: EmailStr
