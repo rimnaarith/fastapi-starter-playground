@@ -1,4 +1,4 @@
-from fastapi import Depends, HTTPException
+from fastapi import HTTPException
 
 from app.core.security import (
   decode_token,
@@ -8,7 +8,7 @@ from app.core.security import (
   create_refresh_token,
 )
 from app.modules.auth.schemas import UserRegister, RegisterResponse
-from app.modules.users.service import UserService, get_user_service
+from app.modules.users.service import UserService
 
 from .schemas import TokenResponse
 
@@ -63,8 +63,3 @@ class AuthService:
       access_token=create_access_token(str(user.id)),
       refresh_token=create_refresh_token(str(user.id))
     )
-
-def get_auth_service(
-  user_service: UserService = Depends(get_user_service),
-):
-  return AuthService(user_service)

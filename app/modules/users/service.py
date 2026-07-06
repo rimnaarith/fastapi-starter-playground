@@ -1,10 +1,9 @@
 from uuid import UUID
 
-from fastapi import Depends, HTTPException
+from fastapi import HTTPException
 
-from app.core.security import hash_password
 from app.modules.users.models import User
-from .repository import UserRepository, get_user_repository
+from .repository import UserRepository
 
 
 class UserService:
@@ -34,8 +33,3 @@ class UserService:
 
   async def get_by_id(self, id: str):
     return await self.repo.get_by_id(UUID(id))
-  
-def get_user_service(
-  user_repo: UserRepository = Depends(get_user_repository),
-):
-  return UserService(user_repo)

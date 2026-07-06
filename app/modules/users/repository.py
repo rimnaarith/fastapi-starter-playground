@@ -1,10 +1,7 @@
 from uuid import UUID
 
-from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
-
-from app.core.database import get_db
 
 from .models import User
 
@@ -37,6 +34,3 @@ class UserRepository:
       select(User).where(User.id == id)
     )
     return result.scalar_one_or_none()
-  
-def get_user_repository(db: AsyncSession = Depends(get_db)):
-  return UserRepository(db)

@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Cookie, Depends, HTTPException, Response
 
-from app.modules.auth.service import AuthService, get_auth_service
+from app.modules.auth.service import AuthService
+from app.modules.auth.dependencies import get_auth_service
 from app.core.config import settings
 
 from app.modules.auth.schemas import (
