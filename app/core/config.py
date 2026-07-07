@@ -12,6 +12,11 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     REFRESH_TOKEN_EXPIRE_DAYS: int = 7
 
+    STORAGE_DRIVER: str = "local"
+    UPLOAD_DIR: str = "uploads"
+    S3_BUCKET: str = ""
+    S3_REGION: str = ""
+
     model_config = SettingsConfigDict(
         env_file=ENV_FILE,
         env_file_encoding="utf-8",

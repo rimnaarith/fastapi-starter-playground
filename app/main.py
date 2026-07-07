@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from enum import Enum
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from app.api.v1.router import router as v1_router
@@ -8,6 +9,13 @@ from app.api.v1.router import router as v1_router
 app = FastAPI()
 
 app.include_router(v1_router, prefix="/api/v1")
+
+# Server Static and Public Files
+app.mount(
+  "/uploads",
+  StaticFiles(directory="uploads"),
+  name="uploads",
+)
 
 # -------------------------- #
 # Using Enum

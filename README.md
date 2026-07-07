@@ -9,6 +9,7 @@
 - alembic                       DB migrations
 - pwdlib[argon2]                Password hashing
 - python-jose[cryptography]     JWT implementation
+- aiofiles                      Asynchronous file I/O
 ```
 
 ## Quick Start (local)
