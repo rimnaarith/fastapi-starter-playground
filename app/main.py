@@ -1,12 +1,27 @@
 from fastapi import FastAPI
-from enum import Enum
+# from enum import Enum
 from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel
+# from pydantic import BaseModel
 
 from app.api.v1.router import router as v1_router
 
 
-app = FastAPI()
+app = FastAPI(
+    title="FastAPI Starter Playground",
+    description="""
+## Features
+
+- JWT Authentication
+- File Upload
+
+""",
+    version="1.0.0",
+    summary="A simple FastAPI project built for experimenting, learning API development, and testing Python backend concepts.",
+    contact={
+      "name": "Rim Naarith",
+      "email": "rimnaarith@gmail.com",
+    },
+)
 
 app.include_router(v1_router, prefix="/api/v1")
 
@@ -16,7 +31,7 @@ app.mount(
   StaticFiles(directory="uploads"),
   name="uploads",
 )
-
+""" 
 # -------------------------- #
 # Using Enum
 # -------------------------- #
@@ -109,3 +124,4 @@ async def create_item(item: Item):
 # ============================================================== #
 
 
+ """
